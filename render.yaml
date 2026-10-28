@@ -1,0 +1,33 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# Bot long polling bilan ishlaydi, shuning uchun "Background Worker" (port kerak emas).
+# SQLite baza doimiy diskda saqlanadi — disk faqat pullik tariflarda mavjud.
+services:
+  - type: worker
+    name: uniconstaff-bot
+    runtime: node
+    plan: starter
+    region: frankfurt
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    autoDeploy: true
+    disk:
+      name: unicon-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: SUPER_ADMIN_IDS
+        sync: false
+      - key: DB_PATH
+        value: /var/data/unicon.db
+      - key: ADMIN_COMMAND
+        value: admin
+      - key: REMINDER_TIMES
+        value: "10:00,18:00"
+      - key: BACKUP_TIME
+        value: "23:00"
+      - key: TZ_OFFSET_MIN
+        value: "300"
+      - key: COMPANY_NAME
+        value: Unicon Soft

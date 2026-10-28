@@ -1,0 +1,30 @@
+const db = require('../../db');
+const P = require('../../perms');
+const state = require('../../state');
+const { LINE, esc, btn, kb, backBtn, cancelBtn, show } = require('../../ui');
+
+function settingsMenu(ctx, header = '') {
+  state.clear(ctx.from.id);
+  const info = db.settingGet('pay_info');
+  return show(ctx, `${header}⚙️ <b>Sozlamalar</b>\n${LINE}\n💳 <b>Karta rekvizitlari</b>\n`
+    + "<i>(hodim «Karta orqali» to'lashda ko'radi)</i>\n\n"
+    + (info ? esc(info) : '⚠️ Hali kiritilmagan'), kb([
+    [btn("✏️ Rekvizitlarni o'zgartirish", 'a:set:pay', 'primary')],
+    [backBtn('a:menu', '🏠 Admin panel')],
+  ]));
+}
+
+module.exports = (bot) => {
+  const g = P.guard('admins', 'collections');
+
+  bot.callbackQuery('a:set', g, (ctx) => settingsMenu(ctx));
+  bot.callbackQuery('a:set:pay', g, (ctx) => {
+    state.set(ctx.from.id, 'set_pay');
+    return show(ctx, "💳 Karta orqali to'lov uchun <b>rekvizitlarni</b> yuboring. Masalan:\n\n"
+      + '<code>Karta: 8600 1234 5678 9012\nEgasi: Aliyev Vali\nClick: +998 90 123 45 67</code>', kb([[cancelBtn()]]));
+  });
+  state.defineStep('set_pay', { perms: ['admins', 'collections'] }, (ctx) => {
+    db.settingSet('pay_info', ctx.message.text.trim().slice(0, 700));
+    return settingsMenu(ctx, '✅ <b>Saqlandi!</b>\n\n');
+  });
+};

@@ -1,0 +1,21 @@
+{
+  "name": "unicon-staff",
+  "version": "1.0.0",
+  "description": "Unicon Soft hodimlar kassasi Telegram boti",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "grammy": "^1.46.0"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}

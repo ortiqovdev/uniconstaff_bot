@@ -1,11 +1,12 @@
 const db = require('../../db');
+const cfg = require('../../config');
 const P = require('../../perms');
 const state = require('../../state');
 const { LINE, esc, btn, kb, backBtn, cancelBtn, show } = require('../../ui');
 
 function settingsMenu(ctx, header = '') {
   state.clear(ctx.from.id);
-  const info = db.settingGet('pay_info');
+  const info = db.settingGet('pay_info') || cfg.PAY_INFO_DEFAULT;
   return show(ctx, `${header}⚙️ <b>Sozlamalar</b>\n${LINE}\n💳 <b>Karta rekvizitlari</b>\n`
     + "<i>(hodim «Karta orqali» to'lashda ko'radi)</i>\n\n"
     + (info ? esc(info) : '⚠️ Hali kiritilmagan'), kb([

@@ -15,6 +15,6 @@ module.exports = {
   BACKUP_TIME: process.env.BACKUP_TIME === undefined ? '23:00' : process.env.BACKUP_TIME.trim(),
   TZ_OFFSET_MIN: Number(process.env.TZ_OFFSET_MIN || 300),
   COMPANY: process.env.COMPANY_NAME || 'Unicon Soft',
-  PAY_INFO_DEFAULT: "Karta: 9860 3501 4183 1536\\nEgasi: Ortiqov Akmal",
+  PAY_INFO_DEFAULT: "Karta: 9860 3501 4183 1536\nEgasi: Ortiqov Akmal",
   DB_PATH: path.resolve(__dirname, '..', process.env.DB_PATH || 'data/unicon.db'),
 };

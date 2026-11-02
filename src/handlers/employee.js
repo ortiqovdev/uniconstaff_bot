@@ -155,7 +155,7 @@ function payableCol(ctx, emp, cid) {
 }
 
 function cardInstructions(ctx, col, amount) {
-  const info = db.settingGet('pay_info');
+  const info = db.settingGet('pay_info') || cfg.PAY_INFO_DEFAULT;
   return show(ctx, `💳 <b>Karta orqali to'lov</b>\n${LINE}\n`
     + `📢 Yig'im: <b>${esc(col.title)}</b>\n💵 To'lov summasi: <b>${money(amount)}</b>\n${LINE}\n`
     + `${info ? `🏦 <b>Karta rekvizitlari:</b>\n${esc(info)}` : "⚠️ Karta rekvizitlari hali kiritilmagan — admin bilan bog'laning."}\n${LINE}\n`
